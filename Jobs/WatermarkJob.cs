@@ -116,15 +116,18 @@ namespace HangfireWatermarker.Jobs
                 // fetch watermark
                 ImageData imageData = ImageDataFactory.Create(watermarkPath);
                 Image image = new Image(imageData);
+                image.SetOpacity(0.5f);
                 // Add watermark image to each page
                 for (int i = 1; i <= pdf.GetNumberOfPages(); i++)
                 {
                     var pageSize = pdf.GetPage(i).GetPageSize();
-                    image.SetFixedPosition(i, pageSize.GetWidth() / 2, pageSize.GetHeight() / 2, 100);
 
                     // Scale the watermark to a little smaller than the page size
-                    float scale = 0.8f;
+                    float scale = 0.9f;
                     image.ScaleToFit(pageSize.GetWidth() * scale, pageSize.GetHeight() * scale);
+
+                    // set watermark position to center of page
+                    image.SetFixedPosition(i, pageSize.GetWidth() / 2, pageSize.GetHeight() / 2, 100);
 
                     document.Add(image);
                 }
@@ -137,6 +140,9 @@ namespace HangfireWatermarker.Jobs
             {
                 using (var watermark = new MagickImage(watermarkPath))
                 {
+                    watermark.Format = MagickFormat.Png;
+                    watermark.Evaluate(Channels.Alpha, EvaluateOperator.Add, 0.5);
+                    watermark.Alpha(AlphaOption.On);
                     // Resize watermark to fit image
                     watermark.Resize(image.Width / 3, image.Height / 3);
 
