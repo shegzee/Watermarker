@@ -1,0 +1,31 @@
+﻿@page
+@using HangfireWatermarker.Models;
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h2>File Processing</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="inputfile">Choose a File:</label>
+        <input type="file" id="inputfile" name="inputfile" class="form-control" required />
+        <label for="watermarkfile">Choose a Watermark Image:</label>
+        <input type="file" id="watermarkfile" name="watermarkfile" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<h3>Job Status</h3>
+@foreach (var job in Model.JobStatusList)
+{
+    <div>
+        Job ID: @job.JobId <br />
+        Status: @job.Status <br />
+        @if (job.Status == JobStatus.Completed)
+        {
+            <a href="Download?jobId=@job.JobId">Download Result</a>
+        }
+    </div>
+}

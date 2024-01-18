@@ -1,0 +1,18 @@
+﻿@page "{jobId}"
+@model StatusModel
+
+<h2>Job Status</h2>
+
+<div>
+    Job ID: @Model.JobId <br />
+    Status: @Model.Status <br />
+
+    @if (Model.Status == "Completed")
+    {
+        <a href="Download">Download Result</a>
+    }
+</div>
+
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: @Model.ProgressPercentage%" aria-valuenow="@Model.ProgressPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
