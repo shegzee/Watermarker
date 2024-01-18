@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="files\output\*" />
+    <None Remove="files\uploads\*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FFMediaToolkit" Version="4.5.1" />
     <PackageReference Include="Hangfire" Version="1.8.7" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.7" />
@@ -17,6 +22,11 @@
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="13.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="files\output\" />
+    <Folder Include="files\uploads\" />
   </ItemGroup>
 
 </Project>
