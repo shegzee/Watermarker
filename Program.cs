@@ -40,6 +40,8 @@ app.UseStaticFiles();
 
 app.UseHangfireDashboard();
 
+RecurringJob.AddOrUpdate<CleanupJob>(Guid.NewGuid().ToString(), j => j.CleanExpiredJobs(), Cron.MinuteInterval(app.Configuration.GetValue<int>("Settings:CleanupJobInterval", 30)));
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -55,3 +57,4 @@ app.MapControllers();
 app.MapRazorPages();
 
 app.Run();
+

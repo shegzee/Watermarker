@@ -18,14 +18,16 @@
 </form>
 
 <h3>Job Status</h3>
+<div class="table-striped">
 @foreach (var job in Model.JobStatusList)
 {
-    <div>
-        Job ID: @job.JobId <br />
-        Status: @job.Status <br />
+    <div class="d-sm-table-row">
+        Job: @job.InputFileName - 
+        <span class="">Status: @job.Status</span> 
         @if (job.Status == JobStatus.Completed)
         {
             <a href="Download?jobId=@job.JobId">Download Result</a>
         }
     </div>
 }
+</div>

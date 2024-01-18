@@ -1,11 +1,4 @@
-﻿using FFMediaToolkit.Decoding;
-using HangfireWatermarker.Models;
-//using static System.Net.Mime.MediaTypeNames;
-//using System.Drawing;
-//using System.Reflection.Metadata;
-//using System.Reflection.PortableExecutable;
-//using System.Drawing.Imaging;
-//using iTextSharp.text.pdf;
+﻿using HangfireWatermarker.Models;
 using HangfireWatermarker.Repositories;
 using ImageMagick;
 using iText.IO.Image;

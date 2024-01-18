@@ -8,6 +8,7 @@ namespace Watermarker.Pages
     {
         public string DownloadLink { get; set; }
         public string InputFileName { get; set; }
+        public string ResultFileName { get; set; }
 
         private readonly IConfiguration _configuration;
         private readonly IJobStatusRepository _jobStatusRepository;
@@ -27,6 +28,7 @@ namespace Watermarker.Pages
             var jobItem = _jobStatusRepository.GetJobItem(jobIdGuid);
 
             InputFileName = jobItem.InputFileName;
+            ResultFileName = jobItem.ResultFileName;
             
             var outputFilePath = Path.Combine(outputFilesDirectory, jobItem.ResultFileName);
             // Set the download link to a placeholder for demonstration purposes

@@ -2,6 +2,7 @@
 using HangfireWatermarker.Models;
 using iText.Commons.Actions.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace HangfireWatermarker.Repositories
@@ -65,6 +66,16 @@ namespace HangfireWatermarker.Repositories
         public List<JobItem> GetAllJobItems()
         {
             return _dbContext.JobItems.ToList();
+        }
+
+        public void DeleteOutdatedJobItems(int jobExpiryMinutes, DateTime jobExpiryTime)
+        {   
+            _dbContext.JobItems.Where(j => j.CreatedOn.Value.AddMinutes(jobExpiryMinutes) >= jobExpiryTime).ExecuteDelete();
+        }
+
+        public List<JobItem> GetOutdatedJobItems(int jobExpiryMinutes, DateTime jobExpiryTime)
+        {
+            return _dbContext.JobItems.Where(j => j.CreatedOn.Value.AddMinutes(jobExpiryMinutes) >= jobExpiryTime).ToList();
         }
     }
 }

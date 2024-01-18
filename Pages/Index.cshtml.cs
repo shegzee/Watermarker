@@ -62,6 +62,7 @@ namespace Watermarker.Pages
                         Directory.CreateDirectory(inputFilesDirectory);
                     }
 
+                    var originalFileName = InputFile.FileName;
                     var inputFilePath = Path.Combine(inputFilesDirectory, UniqueFileName(InputFile.FileName));
                     using (var stream = new FileStream(inputFilePath, FileMode.Create))
                     {
@@ -92,6 +93,7 @@ namespace Watermarker.Pages
                         InputFileName = sanitizedFileName,
                         WatermarkFileName = sanitizedWatermarkFileName,
                         Status = JobStatus.Enqueued,
+                        CreatedOn = DateTime.Now,
                     });
 
                     // output file path
@@ -101,10 +103,12 @@ namespace Watermarker.Pages
                         Directory.CreateDirectory(outputFilesDirectory);
                     }
 
-                    var outputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFilePath) + "_watermarked";
+                    //var inputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
+                    var outputFileNameWithoutExtension = "watermarked_" + originalFileName;
+                    //outputFileNameWithoutExtension = Truncate(outputFileNameWithoutExtension, inputFileNameWithoutExtension.Length);
                     var fileExtension = GetFileExtension(sanitizedFileName);
                     var timestamp = DateTime.Now.ToFileTime();
-                    var outputFilePath = Path.Combine(outputFilesDirectory, $"{UniqueFileName(outputFileNameWithoutExtension + "." + fileExtension)}");
+                    var outputFilePath = Path.Combine(outputFilesDirectory, $"{UniqueFileName(outputFileNameWithoutExtension)}");
 
                     // Enqueue the watermark job
                     BackgroundJob.Enqueue(() => _watermarkJob.Process(jobId, fileExtension, inputFilePath, watermarkFilePath, outputFilePath));

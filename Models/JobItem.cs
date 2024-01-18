@@ -12,7 +12,7 @@ namespace HangfireWatermarker.Models
         public string WatermarkFileName { get; set; }
         public string? ResultFileName { get; set; }
         public int Downloads { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
     }
 
     public enum JobStatus
